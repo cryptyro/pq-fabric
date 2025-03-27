@@ -1,0 +1,178 @@
+To create a .tar.gz (compressed tarball) from a folder in Linux
+$ tar -czvf my_project.tar.gz ./my_folder
+
+To list all downloaded Docker images on your system, use the following command: 
+$docker images
+
+To save multiple images in one file:
+$ docker save -o all_images.tar hyperledger/fabric-orderer:latest hyperledger/fabric-peer:latest hyperledger/fabric-ccenv:latest hyperledger/fabric-baseos:latest
+Load the image from the .tar file:
+$ docker load -i all_images.tar
+
+Remove All Docker Images (Including Dangling Ones)
+$ docker rmi -f $(docker images -aq)
+
+convert binary block to json
+ ./../../bin/configtxlator proto_decode \
+    --input mychannel.block \
+    --type common.Block \
+    --output genesis.json
+
+Check if a port is listening or not
+sudo netstat -tulnp | grep 7053  # Linux
+
+
+
+
+
+
+
+
+
+
+
+
+csc-wesee@cscwesee-OptiPlex-7010:~/Downloads/fabric-samples/test-network$ ./network.sh up
+Using docker and docker-compose
+Starting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'leveldb' with crypto from 'cryptogen'
+LOCAL_VERSION=v2.5.12
+DOCKER_IMAGE_VERSION=v2.5.12
+/home/csc-wesee/Downloads/fabric-samples/test-network/../bin/cryptogen
+Generating certificates using cryptogen tool
+Creating Org1 Identities
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org1.yaml --output=organizations
+org1.example.com
++ res=0
+Creating Org2 Identities
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org2.yaml --output=organizations
+org2.example.com
++ res=0
+Creating Orderer Org Identities
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output=organizations
++ res=0
+Generating CCP files for Org1 and Org2
+Creating network "fabric_test" with the default driver
+Creating volume "compose_orderer.example.com" with default driver
+Creating volume "compose_peer0.org1.example.com" with default driver
+Creating volume "compose_peer0.org2.example.com" with default driver
+Creating peer0.org2.example.com ... done
+Creating orderer.example.com    ... done
+Creating peer0.org1.example.com ... done
+CONTAINER ID   IMAGE                               COMMAND             CREATED         STATUS                  PORTS                                                                                                                             NAMES
+4b63bcae712f   hyperledger/fabric-orderer:latest   "orderer"           6 seconds ago   Up Less than a second   0.0.0.0:7050->7050/tcp, :::7050->7050/tcp, 0.0.0.0:7053->7053/tcp, :::7053->7053/tcp, 0.0.0.0:9443->9443/tcp, :::9443->9443/tcp   orderer.example.com
+507e0be22faa   hyperledger/fabric-peer:latest      "peer node start"   6 seconds ago   Up Less than a second   0.0.0.0:7051->7051/tcp, :::7051->7051/tcp, 0.0.0.0:9444->9444/tcp, :::9444->9444/tcp                                              peer0.org1.example.com
+4dd26df3aeed   hyperledger/fabric-peer:latest      "peer node start"   6 seconds ago   Up Less than a second   0.0.0.0:9051->9051/tcp, :::9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp, :::9445->9445/tcp                                    peer0.org2.example.com
+csc-wesee@cscwesee-OptiPlex-7010:~/Downloads/fabric-samples/test-network$ ./network.sh up createChannel
+Using docker and docker-compose
+Creating channel 'mychannel'.
+If network is not up, starting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'leveldb 
+Bringing up network
+LOCAL_VERSION=v2.5.12
+DOCKER_IMAGE_VERSION=v2.5.12
+peer0.org1.example.com is up-to-date
+orderer.example.com is up-to-date
+peer0.org2.example.com is up-to-date
+CONTAINER ID   IMAGE                               COMMAND             CREATED          STATUS          PORTS                                                                                                                             NAMES
+4b63bcae712f   hyperledger/fabric-orderer:latest   "orderer"           26 seconds ago   Up 20 seconds   0.0.0.0:7050->7050/tcp, :::7050->7050/tcp, 0.0.0.0:7053->7053/tcp, :::7053->7053/tcp, 0.0.0.0:9443->9443/tcp, :::9443->9443/tcp   orderer.example.com
+507e0be22faa   hyperledger/fabric-peer:latest      "peer node start"   26 seconds ago   Up 20 seconds   0.0.0.0:7051->7051/tcp, :::7051->7051/tcp, 0.0.0.0:9444->9444/tcp, :::9444->9444/tcp                                              peer0.org1.example.com
+4dd26df3aeed   hyperledger/fabric-peer:latest      "peer node start"   26 seconds ago   Up 20 seconds   0.0.0.0:9051->9051/tcp, :::9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp, :::9445->9445/tcp                                    peer0.org2.example.com
+Using docker and docker-compose
+Generating channel genesis block 'mychannel.block'
+Using organization 1
+/home/csc-wesee/Downloads/fabric-samples/test-network/../bin/configtxgen
++ '[' 0 -eq 1 ']'
++ configtxgen -profile ChannelUsingRaft -outputBlock ./channel-artifacts/mychannel.block -channelID mychannel
+2025-03-27 09:39:46.088 IST 0001 INFO [common.tools.configtxgen] main -> Loading configuration
+2025-03-27 09:39:46.093 IST 0002 INFO [common.tools.configtxgen.localconfig] completeInitialization -> orderer type: etcdraft
+2025-03-27 09:39:46.093 IST 0003 INFO [common.tools.configtxgen.localconfig] completeInitialization -> Orderer.EtcdRaft.Options unset, setting to tick_interval:"500ms" election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216 
+2025-03-27 09:39:46.093 IST 0004 INFO [common.tools.configtxgen.localconfig] Load -> Loaded configuration: /home/csc-wesee/Downloads/fabric-samples/test-network/configtx/configtx.yaml
+2025-03-27 09:39:46.095 IST 0005 INFO [common.tools.configtxgen] doOutputBlock -> Generating genesis block
+2025-03-27 09:39:46.095 IST 0006 INFO [common.tools.configtxgen] doOutputBlock -> Creating application channel genesis block
+2025-03-27 09:39:46.095 IST 0007 INFO [common.tools.configtxgen] doOutputBlock -> Writing genesis block
++ res=0
+Creating channel mychannel
+Adding orderers
++ . scripts/orderer.sh mychannel
++ '[' 0 -eq 1 ']'
++ res=0
+Status: 201
+{
+	"name": "mychannel",
+	"url": "/participation/v1/channels/mychannel",
+	"consensusRelation": "consenter",
+	"status": "active",
+	"height": 1
+}
+
+Channel 'mychannel' created
+Joining org1 peer to the channel...
+Using organization 1
++ peer channel join -b ./channel-artifacts/mychannel.block
++ res=0
+2025-03-27 09:39:52.616 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2025-03-27 09:39:53.067 IST 0002 INFO [channelCmd] executeJoin -> Successfully submitted proposal to join channel
+Joining org2 peer to the channel...
+Using organization 2
++ peer channel join -b ./channel-artifacts/mychannel.block
++ res=0
+2025-03-27 09:39:56.155 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2025-03-27 09:39:56.578 IST 0002 INFO [channelCmd] executeJoin -> Successfully submitted proposal to join channel
+Setting anchor peer for org1...
+Using organization 1
+Fetching channel config for channel mychannel
+Using organization 1
+Fetching the most recent configuration block for the channel
+++ peer channel fetch config /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.pb -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com -c mychannel --tls --cafile /home/csc-wesee/Downloads/fabric-samples/test-network/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+2025-03-27 09:39:56.659 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2025-03-27 09:39:56.664 IST 0002 INFO [cli.common] readBlock -> Received block: 0
+2025-03-27 09:39:56.664 IST 0003 INFO [channelCmd] fetch -> Retrieving last config block: 0
+2025-03-27 09:39:56.666 IST 0004 INFO [cli.common] readBlock -> Received block: 0
+Decoding config block to JSON and isolating config to /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org1MSPconfig.json
+++ configtxlator proto_decode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.pb --type common.Block --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.json
+++ jq '.data.data[0].payload.data.config' /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.json
+++ res=0
+Generating anchor peer update transaction for Org1 on channel mychannel
+++ jq '.channel_group.groups.Application.groups.Org1MSP.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "peer0.org1.example.com","port": 7051}]},"version": "0"}}' /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org1MSPconfig.json
+++ res=0
+++ configtxlator proto_encode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org1MSPconfig.json --type common.Config --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/original_config.pb
+++ configtxlator proto_encode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org1MSPmodified_config.json --type common.Config --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/modified_config.pb
+++ configtxlator compute_update --channel_id mychannel --original /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/original_config.pb --updated /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/modified_config.pb --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.pb
+++ configtxlator proto_decode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.pb --type common.ConfigUpdate --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.json
+++ jq .
++++ cat /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.json
+++ echo '{"payload":{"header":{"channel_header":{"channel_id":"mychannel", "type":2}},"data":{"config_update":{' '"channel_id":' '"mychannel",' '"isolated_data":' '{},' '"read_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org1MSP":' '{' '"groups":' '{},' '"mod_policy":' '"",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '},' '"write_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org1MSP":' '{' '"groups":' '{},' '"mod_policy":' '"Admins",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"AnchorPeers":' '{' '"mod_policy":' '"Admins",' '"value":' '{' '"anchor_peers":' '[' '{' '"host":' '"peer0.org1.example.com",' '"port":' 7051 '}' ']' '},' '"version":' '"0"' '},' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"1"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '}}}}'
+++ configtxlator proto_encode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update_in_envelope.json --type common.Envelope --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org1MSPanchors.tx
+2025-03-27 09:39:56.978 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2025-03-27 09:39:57.005 IST 0002 INFO [channelCmd] update -> Successfully submitted channel update
+Anchor peer set for org 'Org1MSP' on channel 'mychannel'
+Setting anchor peer for org2...
+Using organization 2
+Fetching channel config for channel mychannel
+Using organization 2
+Fetching the most recent configuration block for the channel
+++ peer channel fetch config /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.pb -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com -c mychannel --tls --cafile /home/csc-wesee/Downloads/fabric-samples/test-network/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+2025-03-27 09:39:57.079 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2025-03-27 09:39:57.087 IST 0002 INFO [cli.common] readBlock -> Received block: 0
+2025-03-27 09:39:57.087 IST 0003 INFO [channelCmd] fetch -> Retrieving last config block: 0
+2025-03-27 09:39:57.090 IST 0004 INFO [cli.common] readBlock -> Received block: 0
+Decoding config block to JSON and isolating config to /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org2MSPconfig.json
+++ configtxlator proto_decode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.pb --type common.Block --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.json
+++ jq '.data.data[0].payload.data.config' /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_block.json
+++ res=0
+Generating anchor peer update transaction for Org2 on channel mychannel
+++ jq '.channel_group.groups.Application.groups.Org2MSP.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "peer0.org2.example.com","port": 9051}]},"version": "0"}}' /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org2MSPconfig.json
+++ res=0
+++ configtxlator proto_encode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org2MSPconfig.json --type common.Config --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/original_config.pb
+++ configtxlator proto_encode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org2MSPmodified_config.json --type common.Config --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/modified_config.pb
+++ configtxlator compute_update --channel_id mychannel --original /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/original_config.pb --updated /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/modified_config.pb --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.pb
+++ configtxlator proto_decode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.pb --type common.ConfigUpdate --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.json
+++ jq .
++++ cat /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update.json
+++ echo '{"payload":{"header":{"channel_header":{"channel_id":"mychannel", "type":2}},"data":{"config_update":{' '"channel_id":' '"mychannel",' '"isolated_data":' '{},' '"read_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org2MSP":' '{' '"groups":' '{},' '"mod_policy":' '"",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '},' '"write_set":' '{' '"groups":' '{' '"Application":' '{' '"groups":' '{' '"Org2MSP":' '{' '"groups":' '{},' '"mod_policy":' '"Admins",' '"policies":' '{' '"Admins":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Endorsement":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Readers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '},' '"Writers":' '{' '"mod_policy":' '"",' '"policy":' null, '"version":' '"0"' '}' '},' '"values":' '{' '"AnchorPeers":' '{' '"mod_policy":' '"Admins",' '"value":' '{' '"anchor_peers":' '[' '{' '"host":' '"peer0.org2.example.com",' '"port":' 9051 '}' ']' '},' '"version":' '"0"' '},' '"MSP":' '{' '"mod_policy":' '"",' '"value":' null, '"version":' '"0"' '}' '},' '"version":' '"1"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '},' '"mod_policy":' '"",' '"policies":' '{},' '"values":' '{},' '"version":' '"0"' '}' '}}}}'
+++ configtxlator proto_encode --input /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/config_update_in_envelope.json --type common.Envelope --output /home/csc-wesee/Downloads/fabric-samples/test-network/channel-artifacts/Org2MSPanchors.tx
+2025-03-27 09:39:57.280 IST 0001 INFO [channelCmd] InitCmdFactory -> Endorser and orderer connections initialized
+2025-03-27 09:39:57.304 IST 0002 INFO [channelCmd] update -> Successfully submitted channel update
+Anchor peer set for org 'Org2MSP' on channel 'mychannel'
+Channel 'mychannel' joined
+csc-wesee@cscwesee-OptiPlex-7010:~/Downloads/fabric-samples/test-network$ 
+
