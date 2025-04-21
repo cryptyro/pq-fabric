@@ -18,8 +18,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/hyperledger/fabric/bccsp"
 	cb "github.com/hyperledger/fabric-protos-go-apiv2/common"
+	"github.com/hyperledger/fabric/bccsp"
 	"github.com/hyperledger/fabric/cmd/osnadmin/mocks"
 	"github.com/hyperledger/fabric/common/crypto/tlsgen"
 	"github.com/hyperledger/fabric/orderer/common/channelparticipation"
@@ -99,7 +99,7 @@ var _ = Describe("osnadmin", func() {
 	})
 
 	AfterEach(func() {
-		os.RemoveAll(tempDir)
+		//os.RemoveAll(tempDir)
 		testServer.Close()
 	})
 

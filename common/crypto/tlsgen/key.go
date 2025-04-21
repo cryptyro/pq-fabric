@@ -105,7 +105,7 @@ func newCertKeyPair(isCA bool, isServer bool, certSigner crypto.Signer, parent *
 	if err != nil {
 		return nil, err
 	}
-	privKey := encodePEM("EC PRIVATE KEY", privBytes)
+	privKey := encodePEM("XDSA PRIVATE KEY", privBytes)
 	return &CertKeyPair{
 		Key:     privKey,
 		Cert:    pubKey,

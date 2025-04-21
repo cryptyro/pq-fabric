@@ -22,13 +22,18 @@ import (
 var tmpDir string
 
 func TestMain(m *testing.M) {
-	dir, err := os.MkdirTemp("", "configtxgen")
+	dir := "./configtxgen"
+	err := os.MkdirAll(dir, 0755)
 	if err != nil {
-		panic("Error creating temp dir")
+		panic("Error creating persistent dir")
 	}
+	// dir, err := os.MkdirTemp("", "configtxgen")
+	// if err != nil {
+	// 	panic("Error creating temp dir")
+	// }
 	tmpDir = dir
 	testResult := m.Run()
-	os.RemoveAll(dir)
+	//os.RemoveAll(dir)
 
 	os.Exit(testResult)
 }
